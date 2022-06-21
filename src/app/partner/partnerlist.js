@@ -35,11 +35,12 @@ export class BasicTable extends Component {
         return axios.get(`http://127.0.0.1:8000/dashboard/partner/`)
       })
       .then(res => {
+        console.log(id)
         const partners = res.data;
         NotificationManager.success('Success message', 'Done deleting');
         this.setState({ partners });
+        window.location.reload(false)
         console.log('done deleting')
-        window.location.reload(false);
       })
 
   }
@@ -113,31 +114,31 @@ export class BasicTable extends Component {
                             <td>{partners.montant_achat_dt_field}</td>
                             <td>{partners.frais_contrat}</td>
                             <td>{partners.roi}</td>
-                            <td>{moment(partners.date_creation).format("DD/MM/YYYY")}</td>
+                            <td>{partners.date_creation}</td>
                             <td>
                               <Link className="badge badge-success mr-2" to={`/partner/updatepartner/` + partners.id+`/`}><Trans>Update</Trans></Link>
                               <button type="button" className="badge badge-danger mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Delete
                               </button>
-                              <div>
-                                <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                  <div className="modal-dialog">
-                                    <div className="modal-content">
-                                      <div className="modal-header">
-                                        <h5 className="modal-title" id="exampleModalLabel">Delete Partner</h5>
-                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-                                      </div>
-                                      <div className="modal-body">
-                                        Are you sure you want to confirm delete ?
-                                      </div>
-                                      <div className="modal-footer">
-                                        <a type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</a>
-                                        <a type="button" onClick={() => this.deleteRow(partners.id)} className="btn btn-primary">Confirm delete</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete partner</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete partner
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onClick={ () => this.deleteRow(partners.id)}>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
                             </td>
                           </tr>
                         );

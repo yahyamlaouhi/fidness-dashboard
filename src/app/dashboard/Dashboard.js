@@ -20,6 +20,7 @@ export class Dashboard extends Component {
       posts: [],
       partners: [],
       clientcard: [],
+      pays:[],
       loading: null,
       postsPerPage: 10,
     };
@@ -46,6 +47,14 @@ export class Dashboard extends Component {
       .then(response => {
         const clientcard = response.data;
         this.setState({ clientcard });
+      })
+      .catch(error => console.log(error));
+
+      axios
+      .get("http://127.0.0.1:8000/dashboard/pays/")
+      .then(response => {
+        const pays = response.data;
+        this.setState({ pays });
       })
       .catch(error => console.log(error));
   }
@@ -383,86 +392,16 @@ export class Dashboard extends Component {
             </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
+        <div className="col-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Region</h4>
-                <div className="row">
-                  <div className="col-md-5">
-                    <div className="table-responsive">
-                      <table className="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-us"></i>
-                            </td>
-                            <td>USA</td>
-                            <td className="text-right">1500</td>
-                            <td className="text-right font-weight-medium">
-                              56.35%
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-de"></i>
-                            </td>
-                            <td>Germany</td>
-                            <td className="text-right">800</td>
-                            <td className="text-right font-weight-medium">
-                              33.25%
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-au"></i>
-                            </td>
-                            <td>Australia</td>
-                            <td className="text-right">760</td>
-                            <td className="text-right font-weight-medium">
-                              15.45%
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-gb"></i>
-                            </td>
-                            <td>United Kingdom</td>
-                            <td className="text-right">450</td>
-                            <td className="text-right font-weight-medium">
-                              25.00%
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-ro"></i>
-                            </td>
-                            <td>Romania</td>
-                            <td className="text-right">620</td>
-                            <td className="text-right font-weight-medium">
-                              10.25%
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <i className="flag-icon flag-icon-br"></i>
-                            </td>
-                            <td>Brasil</td>
-                            <td className="text-right">230</td>
-                            <td className="text-right font-weight-medium">
-                              75.00%
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <Pays />
+                <h4 className="card-title">Clients per region</h4>
+                <div className="table-responsive">
+                <Pays />
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
     );
   }

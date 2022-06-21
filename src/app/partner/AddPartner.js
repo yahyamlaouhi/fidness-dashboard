@@ -5,15 +5,16 @@ import axios from 'axios';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import { Redirect, useHistory, useNavigate } from "react-router-dom";
-
+import moment from 'moment';
 class AddPartner extends Component {
   constructor(props) {
     super(props)
     // initioalisation
     this.state = {
       nom: '',
-      type_contrat: '',
-      montant_achat: ''
+      type_contrat: null,
+      montant_achat: null,
+      Frais_contrat:null,
     }
   }
     // creation des fonctions
@@ -52,9 +53,14 @@ class AddPartner extends Component {
      e.preventDefault();
 
     let taskObject = {
-      nom: this.state.loyalty,
-      type_contrat: this.state.contract,
-      code: this.state.average
+      code: this.state.nom,
+      nom: this.state.nom,
+      type_contrat:this.state.type_contrat,
+      montant_achat: parseInt(this.state.montant_achat),
+      frais_contrat: parseInt(this.state.frais_contrat),
+      id_admin_creation:1,
+      roi:parseFloat(this.state.montant_achat/this.state.frais_contrat),
+      date_creation:moment().format("DD-MM-YYYY hh:mm:ss")
     };
 
     console.log(taskObject)
@@ -82,11 +88,11 @@ class AddPartner extends Component {
                 <form className="forms-sample" onSubmit={this.onSubmit}>
                   <Form.Group controlId="loyalty">
                     <label htmlFor="exampleInputName1">Loyalty card name</label>
-                    <input type="text" className="form-control" id="exampleInputName1" placeholder="put your name here ..." name="loyalty" value={this.state.loyalty}  onChange={(e) => this.handleChangePartenarInformations(e)} />
+                    <input type="text" className="form-control" id="exampleInputName1" placeholder="put your name here ..." name="nom" value={this.state.nom}  onChange={(e) => this.handleChangePartenarInformations(e)} />
                   </Form.Group>
                   <Form.Group controlId="contract">
                     <label htmlFor="exampleSelectGender">Contract type</label>
-                    <select className="form-control" id="exampleSelectGender" name="contract" value={this.state.contract}  onChange={(e) => this.handleChangePartenarInformations(e)}>
+                    <select className="form-control" id="exampleSelectGender" name="type_contrat" value={this.state.type_contrat}  onChange={(e) => this.handleChangePartenarInformations(e)}>
                       <option>Select</option>
                       <option>1</option>
                       <option>3</option>
@@ -97,12 +103,12 @@ class AddPartner extends Component {
 
                   <Form.Group controlId="avarage">
                     <label htmlFor="exampleInputPassword4">Average basket</label>
-                    <input type="text" className="form-control" name="average" id="exampleInputPassword4" placeholder="Avarage basket ..." value={this.state.avarage}  onChange={(e) => this.handleChangePartenarInformations(e)} />
+                    <input type="number" className="form-control" name="montant_achat" id="exampleInputPassword4" placeholder="Avarage basket ..." value={this.state.montant_achat}  onChange={(e) => this.handleChangePartenarInformations(e)} />
                   </Form.Group>
 
                   <Form.Group controlId="fees">
                     <label htmlFor="exampleInputPassword4">Contract fees</label>
-                    <input type="text" className="form-control" name="fees" id="exampleInputPassword4" placeholder="Contract fees ..."  onChange={(e) => this.handleChangePartenarInformations(e)} />
+                    <input type="number" className="form-control" name="frais_contrat" id="exampleInputPassword4" placeholder="Contract fees ..." value={this.state.frais_contrat}  onChange={(e) => this.handleChangePartenarInformations(e)} />
                   </Form.Group>
 
                   <button  className="btn btn-primary mr-2">Submit</button>

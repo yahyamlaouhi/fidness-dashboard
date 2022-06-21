@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Trans } from 'react-i18next';
 import axios from "axios";
 import 'react-notifications/lib/notifications.css';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 
 export class Listuser extends Component {
@@ -18,35 +18,39 @@ export class Listuser extends Component {
       postsPerPage: 5,
     };
   }
-    componentDidMount() {
-      axios
-      .get("http://127.0.0.1:8000/administrateur/superadmin/")
-      .then(response =>{
+  componentDidMount() {
+    axios
+      .get("http://127.0.0.1:8000/auth/user/")
+      .then(response => {
+        console.log(response.data)
         const admins = response.data;
-        this.setState({admins});
+        this.setState({ admins });
       })
-      .catch(error => console.log(error));
-    }
-  
-    deleteRow(id) {
-      axios.delete(`http://127.0.0.1:8000/administrateur/superadmin/${id}/`)
+      .catch(error => {
+        console.log(error)
+      });
+  }
+
+  deleteRow(id) {
+    axios.delete(`http://127.0.0.1:8000/auth/user/${id}/`)
       .then(() => {
-  
+
         // Issue GET request after item deleted to get updated list
         // that excludes user of id
-        return axios.get(`http://127.0.0.1:8000/administrateur/superadmin/`)
-    })
-        .then(res => {
-          const admins = res.data;
-          
-          NotificationManager.success('Success message', 'supprimer');
-          this.setState({ admins });
-          window.location.reload(false);
-        })
-          .catch (error => {console.log(error)
-            NotificationManager.success('Error message', 'supprimer');
-          })
-    }
+        return axios.get(`http://127.0.0.1:8000/auth/user/`)
+      })
+      .then(res => {
+        const admins = res.data;
+
+        NotificationManager.success('Success message', 'supprimer');
+        this.setState({ admins });
+        window.location.reload(false);
+      })
+      .catch(error => {
+        console.log(error)
+        NotificationManager.success('Error message', 'supprimer');
+      })
+  }
   render() {
     const indexOfLastPost = this.state.currentPage * this.state.postsPerPage;
     const indexOfFirstPost = indexOfLastPost - this.state.postsPerPage;
@@ -96,10 +100,10 @@ export class Listuser extends Component {
                   <table className="table">
                     <thead>
                       <tr>
+                        <th>User name</th>
                         <th>First name</th>
                         <th>Last name</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Creation date</th>
                         <th>Actions</th>
                       </tr>
@@ -109,36 +113,36 @@ export class Listuser extends Component {
                       {currentPosts.map((admins) => {
                         return (
                           <tr>
-                            <td>{admins.nom}</td>
-                            <td>{admins.prenom}</td>
+                            <td>{admins.username}</td>
+                            <td>{admins.first_name}</td>
+                            <td>{admins.last_name}</td>
                             <td>{admins.email}</td>
-                            <td>{admins.mot_passe}</td>
-                            <td>{moment(admins.date_creation).format("DD/MM/YYYY")}</td>
+                            <td>{moment(admins.date_joined).format("DD/MM/YYYY")}</td>
                             <td>
-                              <Link className="badge badge-success mr-2" to="/user/updateuser"><Trans>Update</Trans></Link>
-                              <a type="button" className="badge badge-danger mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <Link className="badge badge-success mr-2"to={`/user/updateuser/` + admins.id+`/`}><Trans>Update</Trans></Link>
+                              <button type="button" className="badge badge-danger mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Delete
-                              </a>  
-                              <div>
-            <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Delete user</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-                        </div>
-                        <div className="modal-body">
-                            Are you sure you want to confirm delete ? 
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={ () => this.deleteRow(admins.id)}>Confirm delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>                       
-                              </td>
+                              </button>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Delete user</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      Are you sure you want to delete ? 
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary" onClick={ () => this.deleteRow(admins.id)}>Confirm delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
                           </tr>
                         );
                       })}{" "}
@@ -163,7 +167,7 @@ export class Listuser extends Component {
                       ))}{" "}
                     </div>
                   </center>
-                  <NotificationContainer/>
+                  <NotificationContainer />
                 </div>
               </div>
             </div>

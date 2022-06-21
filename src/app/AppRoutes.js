@@ -38,7 +38,7 @@ class AppRoutes extends Component {
             <Route path="/login" component={Login} exact />
             <Route component={Dashboard} path="/dashboard" />
             <Route path="/icons/mdi" component={Mdi} />
-            <Route path="/user/updateuser" component={updateuser} />
+            <Route path="/user/updateuser/:id/" component={updateuser} />
             <Route path="/partnersdashboard" component={Partnerdashboard} />
             <Route path="/register" component={Register1} />
             <Route path="/listuser" component={listuser} />

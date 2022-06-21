@@ -33,7 +33,8 @@ export class Prediction extends Component {
 
         this.setState({ result });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error)});
     
     this.setState({ ...this.state, modal: true });
     console.log(this.state.code);
