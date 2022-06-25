@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { ProgressBar } from "react-bootstrap";
 import moment from 'moment';
 import { Link } from "react-router-dom";
 import { Trans } from 'react-i18next';
@@ -44,7 +43,7 @@ export class Listuser extends Component {
 
         NotificationManager.success('Success message', 'supprimer');
         this.setState({ admins });
-        window.location.reload(false);
+        window.location.href = '/listuser';
       })
       .catch(error => {
         console.log(error)
@@ -119,7 +118,7 @@ export class Listuser extends Component {
                             <td>{admins.email}</td>
                             <td>{moment(admins.date_joined).format("DD/MM/YYYY")}</td>
                             <td>
-                              <Link className="badge badge-success mr-2"to={`/user/updateuser/` + admins.id+`/`}><Trans>Update</Trans></Link>
+                              <Link className="badge badge-success mr-2" to={`/user/updateuser/` + admins.id + `/`}><Trans>Update</Trans></Link>
                               <button type="button" className="badge badge-danger mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Delete
                               </button>
@@ -127,17 +126,17 @@ export class Listuser extends Component {
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Delete user</h5>
+                                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
                                     </div>
                                     <div class="modal-body">
-                                      Are you sure you want to delete ? 
+                                      Are you sure you want to delete this user ?
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                      <button type="button" class="btn btn-primary" onClick={ () => this.deleteRow(admins.id)}>Confirm delete</button>
+                                      <button type="button" class="btn btn-primary" onClick={() => this.deleteRow(admins.id)}>Confirm delete</button>
                                     </div>
                                   </div>
                                 </div>

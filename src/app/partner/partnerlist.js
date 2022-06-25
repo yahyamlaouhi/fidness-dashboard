@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import { ProgressBar } from "react-bootstrap";
-import moment from 'moment';
 import { Trans } from 'react-i18next';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from "axios";
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import { useHistory } from "react-router-dom";
 export class BasicTable extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +36,7 @@ export class BasicTable extends Component {
         const partners = res.data;
         NotificationManager.success('Success message', 'Done deleting');
         this.setState({ partners });
-        window.location.reload(false)
+        window.location.href = '/partner/partenarList'
         console.log('done deleting')
       })
 
@@ -116,29 +113,29 @@ export class BasicTable extends Component {
                             <td>{partners.roi}</td>
                             <td>{partners.date_creation}</td>
                             <td>
-                              <Link className="badge badge-success mr-2" to={`/partner/updatepartner/` + partners.id+`/`}><Trans>Update</Trans></Link>
+                              <Link className="badge badge-success mr-2" to={`/partner/updatepartner/` + partners.id + `/`}><Trans>Update</Trans></Link>
                               <button type="button" className="badge badge-danger mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Delete
                               </button>
                               <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete partner</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to delete partner
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onClick={ () => this.deleteRow(partners.id)}>Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      ...
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary" onClick={() => this.deleteRow(partners.id)}>Save changes</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </td>
                           </tr>
                         );

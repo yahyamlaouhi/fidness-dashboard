@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-datepicker";
 import bsCustomFileInput from "bs-custom-file-input";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 export class Prediction extends Component {
   constructor(props) {
@@ -14,28 +13,24 @@ export class Prediction extends Component {
     const { name, value } = event.target;
     this.setState({ ...this.state, [name]: value });
 
-    //call your api here
-    // const response = await api.addPartenar
-    // .then(res=>{
-    //   console.log(res)
-    //  }).catch(err => alert("error in adding partenar"))
   }
-   handlePredicate(e) {
-     e.preventDefault();
-    let url="http://127.0.0.1:8000/dashboard/prediction/"+this.state.code+"/"
+  handlePredicate(e) {
+    e.preventDefault();
+    let url = "http://127.0.0.1:8000/dashboard/prediction/" + this.state.code + "/"
 
-     axios
+    axios
       .get(url)
       .then(response => {
-        let result="NOT CHURN"
-         let r = response.data;
-         if (r[0]===1){  result=' CHURN'}
+        let result = "NOT CHURN"
+        let r = response.data;
+        if (r[0] === 1) { result = ' CHURN' }
 
         this.setState({ result });
       })
       .catch(error => {
-        console.log(error)});
-    
+        console.log(error)
+      });
+
     this.setState({ ...this.state, modal: true });
     console.log(this.state.code);
   }
@@ -75,7 +70,6 @@ export class Prediction extends Component {
                       placeholder="put your code here ..."
                       name="code"
                       onChange={(e) => this.handleChangePartenarInformations(e)}
-                      defaultValue="15"
                     />
                   </Form.Group>
                   <button

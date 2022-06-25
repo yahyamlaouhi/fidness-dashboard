@@ -1,24 +1,26 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import axios from 'axios'
-import moment from 'moment'
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 export default class UpdatePartner extends Component {
   constructor(props) {
     super(props)
 
     // State
     this.state = {
-      code:'',
+      code: '',
       nom: '',
-      type_contrat:null,
+      type_contrat: null,
       montant_achat: null,
-      frais_contrat:null,
+      frais_contrat: null,
+      id_admin_creation: null
     }
   }
 
   componentDidMount() {
     axios.get(`http://127.0.0.1:8000/dashboard/partner/` + this.props.match.params.id + `/`).then(res => {
-      this.setState({code:res.data.code, nom: res.data.nom, type_contrat: res.data.type_contrat, montant_achat: res.data.montant_achat, frais_contrat: res.data.frais_contrat, roi:res.data.roi, date_creation: res.data.date_creation });
+      this.setState({ code: res.data.code, nom: res.data.nom, type_contrat: res.data.type_contrat, montant_achat: res.data.montant_achat, frais_contrat: res.data.frais_contrat, roi: res.data.roi, date_creation: res.data.date_creation, id_admin_creation: res.data.id_admin_creation });
     }).catch((error) => {
       console.log(error);
     })
@@ -26,24 +28,27 @@ export default class UpdatePartner extends Component {
   handleChangePartenarInformations(event) {
     const { name, value } = event.target;
     this.setState({ ...this.state, [name]: value });
-    }
+  }
   onSubmit = (e) => {
     e.preventDefault()
 
     const taskObject = {
       code: this.state.code,
       nom: this.state.nom,
-      montant_achat:parseInt(this.state.montant_achat),
+      montant_achat: parseInt(this.state.montant_achat),
       type_contrat: this.state.type_contrat,
       frais_contrat: parseInt(this.state.frais_contrat),
-      roi:parseFloat(this.state.frais_contrat/this.state.montant_achat),
-      date_creation:moment().format("DD-MM-YYYY hh:mm:ss")
+      roi: parseFloat(this.state.frais_contrat / this.state.montant_achat),
+      date_creation: this.state.date_creation,
+      id_admin_creation: parseInt(this.state.id_admin_creation)
     };
     console.log(taskObject)
     axios.put(`http://127.0.0.1:8000/dashboard/partner/` + this.props.match.params.id + `/`, taskObject).then((res) => {
       console.log(res.data)
-      console.log('task a été modifié')
+      NotificationManager.success('Success message', 'Updated ');
+      window.location.href = '/partner/partenarList'
     }).catch((error) => {
+      NotificationManager.warning('Warning message', 'Please verify your informations', 3000);
       console.log(error)
     })
 
@@ -61,7 +66,7 @@ export default class UpdatePartner extends Component {
               <div className="card-body">
                 <h4 className="card-title">Update partner</h4>
                 <form className="forms-sample" onSubmit={this.onSubmit}>
-                <Form.Group>
+                  <Form.Group>
                     <label htmlFor="exampleInputName1">Code</label>
                     <Form.Control type="text" className="form-control" id="code" placeholder="put your name here ..." name="code" value={this.state.code} onChange={(e) => this.handleChangePartenarInformations(e)} />
                   </Form.Group>
@@ -93,6 +98,7 @@ export default class UpdatePartner extends Component {
                   <button type="submit" className="btn btn-primary mr-2">Update</button>
                   <button className="btn btn-dark">Cancel</button>
                 </form>
+                <NotificationContainer />
               </div>
             </div>
           </div>

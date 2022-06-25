@@ -1,21 +1,22 @@
 import React from 'react';
-
-import { useContext } from 'react';
-import { Route } from 'react-router-dom';
+import {useContext} from 'react';
+import {Route} from 'react-router-dom';
 import AuthContext from './context/AuthContext';
-import { useHistory,Redirect } from "react-router-dom"
-import Dashboard from './dashboard/Dashboard';
+import {Redirect} from "react-router-dom"
 
-const PrivateRoute = ({children, ...rest}) => {
-  console.log(useContext(AuthContext));
+const PrivateRoute = ({
+    children,
+    ...rest
+}) => {
+    console.log(useContext(AuthContext));
 
-  let {user} = useContext(AuthContext)
-       let result=user ?<Route {...rest}></Route>: <Redirect to="/login" />
-       console.log(user)
+    let {user} = useContext(AuthContext)
+    let result = user ? <Route {...rest}></Route> : <Redirect to="/login"/>
+    console.log(user)
 
 
-    return result ;
-    
+    return result;
+
 }
 
 export default PrivateRoute;

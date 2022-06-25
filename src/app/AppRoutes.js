@@ -36,18 +36,18 @@ class AppRoutes extends Component {
           <Switch>
             <PrivateRoute component={Dashboard} path="/dashboard" exact> </PrivateRoute>
             <Route path="/login" component={Login} exact />
-            <Route component={Dashboard} path="/dashboard" />
-            <Route path="/icons/mdi" component={Mdi} />
-            <Route path="/user/updateuser/:id/" component={updateuser} />
-            <Route path="/partnersdashboard" component={Partnerdashboard} />
-            <Route path="/register" component={Register1} />
-            <Route path="/listuser" component={listuser} />
-            <Route path="/prediction" component={Prediction} />
-            <Route path="/partner/add-partner" component={addpartner} />
-            <Route path="/partner/partenarList" component={partnerlist} />
-            <Route path="/partner/updatepartner/:id/" component={updatepartner} />
-            <Route path="/error-pages/error-404" component={Error404} />
-            <Route path="/error-pages/error-500" component={Error500} />
+            <PrivateRoute component={Dashboard} path="/dashboard" />
+            <PrivateRoute path="/icons/mdi" component={Mdi} />
+            <PrivateRoute path="/user/updateuser/:id/" component={updateuser} />
+            <PrivateRoute path="/partnersdashboard" component={Partnerdashboard} />
+            <PrivateRoute path="/register" component={Register1} />
+            <PrivateRoute path="/listuser" component={listuser} />
+            <PrivateRoute path="/prediction" component={Prediction} />
+            <PrivateRoute path="/partner/add-partner" component={addpartner} />
+            <PrivateRoute path="/partner/partenarList" component={partnerlist} />
+            <PrivateRoute path="/partner/updatepartner/:id/" component={updatepartner} />
+            <PrivateRoute path="/error-pages/error-404" component={Error404} />
+            <PrivateRoute path="/error-pages/error-500" component={Error500} />
             <Redirect to="/dashboard"></Redirect>
           </Switch>
         </AuthProvider>

@@ -1,11 +1,4 @@
-import React, {Component} from 'react';
-import {
-    Line,
-    Bar,
-    Doughnut,
-    Pie,
-    Scatter
-} from 'react-chartjs-2';
+import React, { Component } from 'react';
 import Partnercustomer from './visualization/customerpartner';
 import Partnerage from './visualization/agepartner';
 import PartnerSexe from './visualization/partnersexe';
@@ -26,7 +19,7 @@ export class ChartJs extends Component {
                                 <a href="!#"
                                     onClick={
                                         event => event.preventDefault()
-                                }>Partners
+                                    }>Partners
                                 </a>
                             </li>
                             <li className="breadcrumb-item active" aria-current="page">Dashboard</li>
@@ -38,7 +31,7 @@ export class ChartJs extends Component {
                         <div className="card-body">
                             <h4 className="card-title">Gender of customer per partner</h4>
                             <div className="table-responsive">
-                                <PartnerSexe/>
+                                <PartnerSexe />
                             </div>
                         </div>
                     </div>
@@ -48,22 +41,22 @@ export class ChartJs extends Component {
                         <div className="card-body">
                             <h4 className="card-title">Number of customer per partner</h4>
                             <div className="table-responsive">
-                                <Partnercustomer/>
+                                <Partnercustomer />
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div className="col-12 grid-margin">
                     <div className="card">
                         <div className="card-body">
                             <h4 className="card-title">Age of customer per partner</h4>
                             <div className="table-responsive">
-                                <Partnerage/>
+                                <Partnerage />
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
 
             </div>
